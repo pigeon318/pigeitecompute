@@ -1,0 +1,8 @@
+/build/
+vcpkg_installed/
+*.exe
+*.obj
+*.o
+*.dll
+*.lib
+*.a
