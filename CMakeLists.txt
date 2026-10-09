@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(boost_asio REQUIRED CONFIG)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 add_executable(pigeite-server
     server/src/main.cpp
@@ -17,6 +18,7 @@ add_executable(pigeite-server
 target_link_libraries(pigeite-server
     PRIVATE
     Boost::asio
+     nlohmann_json::nlohmann_json
 )
 
 add_executable(pigeite-node

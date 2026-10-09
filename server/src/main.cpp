@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
 #include <boost/asio.hpp>
+#include <nlohmann/json.hpp>
 
 using boost::asio::ip::tcp;
+using json = nlohmann::json;
 
 int main()
 {
@@ -22,6 +24,40 @@ int main()
             acceptor.accept(socket);
 
             std::cout << "node connected.\n";
+
+            boost::asio::streambuf buffer;
+
+            boost::asio::read_until(socket, buffer, '\n');
+
+            std::istream input(&buffer);
+
+            std::string message;
+            std::getline(input, message);
+
+            std::cout << message;
+            json recived = json::parse(message);
+
+            std::cout << recived;
+
+            if (!recived.contains("type")){
+                std::cerr << "invalid message, missing type \n";
+                return 1;
+            }
+            if (!recived["type"].is_string()){
+                std::cerr << "invalid message, type musy be a string\n";
+                return 1;
+            }
+            if (recived["type"] != "hello"){
+                std::cerr << "invalid message, excpected hello\n";
+                return 1;
+            }
+            if (recived["protocol"] != 0){
+                std::cerr << "wrong protocol version";
+                return 1;
+            }
+
+
+
         }
     }
     catch (std::exception& e){

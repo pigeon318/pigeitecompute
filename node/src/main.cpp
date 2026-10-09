@@ -24,4 +24,10 @@ int main(int argc, char* argv[])
 
     std::cout << "connected to" << server_address << ":31820";
 
+    std::string hello =
+    "{\"type\":\"hello\",\"protocol\":0,"
+    "\"client\":\"pigeite-node\","
+    "\"client_version\":\"0.0.1\"}\n";
+
+    boost::asio::write(socket, boost::asio::buffer(hello));
 }
