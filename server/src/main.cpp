@@ -33,11 +33,9 @@ int main()
 
             std::string message;
             std::getline(input, message);
-
-            std::cout << message;
             json recived = json::parse(message);
 
-            std::cout << recived;
+            std::cout << recived << '\n';
 
             if (!recived.contains("type")){
                 std::cerr << "invalid message, missing type \n";
@@ -52,9 +50,20 @@ int main()
                 return 1;
             }
             if (recived["protocol"] != 0){
-                std::cerr << "wrong protocol version";
+                std::cerr << "wrong protocol version\n";
                 return 1;
             }
+            else{
+                std::cout << "recived valid HELLO\n";
+            }
+
+            std::string hello_ack =
+            "{\"type\":\"hello_ack\",\"protocol\":0,"
+            "\"server_version\":\"0.0.1\","
+            "\"node_id\":\"n000001\"}\n";
+
+            boost::asio::write(socket, boost::asio::buffer(hello_ack));
+            std::cout << "senrt HELLO_ACK\n";
 
 
 
