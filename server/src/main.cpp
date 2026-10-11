@@ -2,6 +2,8 @@
 #include <string>
 #include <boost/asio.hpp>
 #include <nlohmann/json.hpp>
+#include <sstream>
+#include <iomanip>
 
 using boost::asio::ip::tcp;
 using json = nlohmann::json;
@@ -17,6 +19,8 @@ int main()
         );
 
         std::cout << "listening on 31820\n";
+
+        unsigned int next_node_id = 1;
 
         for (;;){
             tcp::socket socket(io_context);
@@ -57,10 +61,15 @@ int main()
                 std::cout << "recived valid HELLO\n";
             }
 
+            
+            std::ostringstream id_stream;
+            id_stream << "n" << std::setw(6) << std::setfill('0') << next_node_id++;
+            std::string node_id = id_stream.str();
+
             std::string hello_ack =
-            "{\"type\":\"hello_ack\",\"protocol\":0,"
-            "\"server_version\":\"0.0.1\","
-            "\"node_id\":\"n000001\"}\n";
+                "{\"type\":\"hello_ack\",\"protocol\":0,"
+                "\"server_version\":\"0.0.1\","
+                "\"node_id\":\"" + node_id + "\"}\n";
 
             boost::asio::write(socket, boost::asio::buffer(hello_ack));
             std::cout << "senrt HELLO_ACK\n";
