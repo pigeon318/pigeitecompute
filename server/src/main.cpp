@@ -5,8 +5,10 @@
 #include <sstream>
 #include <iomanip>
 
+
 using boost::asio::ip::tcp;
 using json = nlohmann::json;
+
 
 int main()
 {
@@ -73,6 +75,13 @@ int main()
 
             boost::asio::write(socket, boost::asio::buffer(hello_ack));
             std::cout << "senrt HELLO_ACK\n";
+
+            boost::asio::read_until(socket, buffer, '\n');
+
+            message.clear();
+            std::getline(input, message);
+            recived = json::parse(message);
+            std::cout << recived << '\n';
 
 
 
