@@ -83,6 +83,21 @@ int main()
             recived = json::parse(message);
             std::cout << recived << '\n';
 
+        
+            if(!recived["type"].is_string()){
+                std::cerr << "invalid message, type must be string";
+            }
+            if(recived["type"] != "capabilities"){
+                std::cerr << "invalid message, type must be capabilities"
+            }
+            if(!recived["architecture"].is_string()){
+                std::cerr << "invalid message, architechture must be a string";
+            }
+            if(recived["architecture"].get<std::string>().empty()){
+                std::cerr << "invalid message, architechture must not be empty";
+            }
+
+
 
 
         }

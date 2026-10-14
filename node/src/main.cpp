@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
     "{\"type\":\"capabilities\","
     "\"architecture\":\"" + get_architecture() + "\","
     "\"os\":\"" + get_os() + "\","
-    "\"threads\":" + std::to_string(std::thread::hardware_concurrency()) + ","
+    "\"logical_threads\":" + std::to_string(std::thread::hardware_concurrency()) + ","
     "\"memory_mb\":" + std::to_string(get_total_memory_mb()) + ","
     "\"workloads\":[\"pi.monte_carlo\"]}\n";
 
