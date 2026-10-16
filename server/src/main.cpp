@@ -88,7 +88,7 @@ int main()
                 std::cerr << "invalid message, type must be string";
             }
             if(recived["type"] != "capabilities"){
-                std::cerr << "invalid message, type must be capabilities"
+                std::cerr << "invalid message, type must be capabilities";
             }
             if(!recived["architecture"].is_string()){
                 std::cerr << "invalid message, architechture must be a string";
@@ -96,6 +96,30 @@ int main()
             if(recived["architecture"].get<std::string>().empty()){
                 std::cerr << "invalid message, architechture must not be empty";
             }
+            if(!recived["os"].is_string()){
+                std::cerr << "invalid message, os must be a string";
+            }
+            else{
+                std::cout << "recived valid CAPABILITIES";
+            }
+
+            json node_capbilities = recived;
+
+            boost::asio::read_until(socket, buffer, '\n');
+
+            message.clear();
+            std::getline(input, message);
+            recived = json::parse(message);
+            std::cout << recived << '\n';
+
+            if(recived["type"] != "ready"){
+                std::cerr << "invalid message, excpected type to be ready";
+            }
+            else{
+                std::cout << "recived valid READY node is now ready to work";
+            }
+
+
 
 
 

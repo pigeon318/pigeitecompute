@@ -147,6 +147,11 @@ int main(int argc, char* argv[])
 
     std::cout << "sent CAPABILITIES";
 
+    std::string ready = "{\"type\":\"ready\"}\n";
+    boost::asio::write(socket, boost::asio::buffer(ready));
+
+
+
 
    
 
